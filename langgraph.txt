@@ -1,0 +1,76 @@
+- LangGraph is an orchestration framework for building intelligent, stateful, and multi-step LLM workflows
+- It enables advanced featues like parallelism, loops, branching, memory, and resumability - making it ideal for agentic and production grade AI applications
+- It models your logic as a graph of nodes (tasks) and edges (routing) instead of linear chain.
+
+## LLM Workflows
+
+- Step by step process using which we build complex LLM applications
+- Each step in a workflow performs a distint task - such as prompting, reasoning, tool calling, memory access, or decision making.
+- Workflows can be linear, parallel, branched, or looped.
+
+*Common Workflows:*
+
+- Prompt Chaining
+- Routing
+- Parallelization
+- Orchestrator Workers
+- Evaluator Optimizer
+
+## Graphs, Nodes and Edges
+
+- Decide your goal
+- Break down goal into multiple steps
+- Then write them in the graph format with nodes and edges.
+- LangGraph will do this task? (Not clear)
+
+## State
+
+In LangGraph, state is the shared memory that flows through your workflow - it holds all the data being passed between nodes as your graph runs
+
+- State is shared and mutable
+- Created with special dict called “typed dict”
+
+## Reducers
+
+Reducers in LangGraph define how updates from nodes are applied to the shared state. (merged, replace, add)
+
+Each key in the state can have its own reducer,which determines whether new data replaces, merges, or adds to the existing value.
+
+## LangGraph Execution Model
+
+*1-Graph Definition*
+
+You define:
+
+- The state schema
+- Nodes
+- Edges
+
+*2-Compilation*
+
+You call `.compile()` on the `StateGraph`
+
+This checks the graph structure and prepares it for execution
+
+*3-Invocation*
+
+You run the graph with `.invoke(intial_state)`
+
+LangGraph sends the initial state as a message to the entry node(s).
+
+*4-Super step Begin*
+
+Execution proceeds in rounds
+
+*5-Message passing & Node activation*
+
+The messages are passed to downstream nodes via edges
+
+Nodes that receive messages become active for the next round
+
+*6-Halting condition*
+
+Execution stops when
+
+- No nodes are active, and
+- No messages are in transit
