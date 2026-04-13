@@ -4,6 +4,7 @@ from langchain_core.messages import BaseMessage
 from langchain_ollama import ChatOllama
 from langgraph.checkpoint.memory import InMemorySaver
 from langgraph.graph.message import add_messages
+from langchain_core.messages import AIMessage
 
 
 llm= ChatOllama(model="llama3.2:latest")
@@ -13,7 +14,7 @@ class ChatState(TypedDict):
     
 def chat_node(state: ChatState):
     response = llm.invoke(state['messages']).content
-    return {'messages':[response]}
+    return {'messages':[AIMessage(content=response)]}
 
 checkpointer = InMemorySaver()
 
