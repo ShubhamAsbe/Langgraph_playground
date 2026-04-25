@@ -34,7 +34,7 @@ if 'chat_threads' not in st.session_state:
     
 add_threads(st.session_state['thread_id'])
 
-config={'configurable':{'thread_id': st.session_state['thread_id']}}
+config={'configurable':{'thread_id': st.session_state['thread_id']},"metadata":{"thread_id": st.session_state['thread_id']},"run_name":"chat_turn"}
     
 st.sidebar.title("Langgraph Chatbot with Streamlit")
 
